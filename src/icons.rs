@@ -33,7 +33,7 @@ impl IconManger {
             Some(icon) => {
                 icon.to_string()
             },
-            None => " ".to_string(),
+            None => "?".to_string(),
         }
     }
 }

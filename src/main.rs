@@ -1,4 +1,4 @@
-
+use clap::Parser;
 use ratatui::backend::CrosstermBackend;
 use ratatui::Terminal;
 use std::io;
@@ -8,14 +8,20 @@ use weather_tui::event::{Event, EventHandler};
 use weather_tui::handler::handle_key_events;
 use weather_tui::tui::Tui;
 
+#[derive(Parser, Debug)]
+struct Args {
+    #[arg(short, long)]
+    weather_api_key: String,
+}
+
 #[tokio::main]
 async fn main() -> AppResult<()> {
-
     // setup logging
-    // simple_logging::log_to_file("test.log", log::LevelFilter::Trace)?;
+    let args = Args::parse();
 
     // Create an application.
     let mut app = App::new();
+    app.weather_api_key = args.weather_api_key.clone();
 
     // Initialize the terminal user interface.
     let backend = CrosstermBackend::new(io::stderr());

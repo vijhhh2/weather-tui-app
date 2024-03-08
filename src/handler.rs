@@ -14,15 +14,16 @@ pub async fn handle_key_events(key_event: KeyEvent, app: &mut App) -> AppResult<
                 app.quit();
             }
         }
-        // Counter handlers
-        KeyCode::Right => {
-            app.increment_counter();
+        KeyCode::Backspace => {
+            if !app.search_string.is_empty() {
+                app.search_string.pop();
+            }
         }
-        KeyCode::Left => {
-            app.decrement_counter();
+        KeyCode::Enter => {
+            app.get_wether_data().await?;
         }
-        KeyCode::Char('r') => {
-            app.get_wether_data().await;
+        KeyCode::Char(value) => {
+            app.search_string.push(value);
         }
         // Other handlers you could add here.
         _ => {}
